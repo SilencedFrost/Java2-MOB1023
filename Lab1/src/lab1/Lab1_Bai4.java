@@ -41,6 +41,10 @@ public class Lab1_Bai4 {
         for(Product tempProduct: product)
         {
             System.out.printf("Product name: %s, price: %f, import tax: %f\n", tempProduct.getName(), tempProduct.getPrice(), tempProduct.getImportTax());
+            tempProduct.insert();
+            tempProduct.update();
+            tempProduct.delete();
+            tempProduct.select();
         }
     }
 }
