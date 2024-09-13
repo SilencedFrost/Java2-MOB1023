@@ -263,6 +263,7 @@ public class UserManagement extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Fields cannot be blank!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
+        index = -1;
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
