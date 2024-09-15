@@ -7,6 +7,8 @@ package UI;
 import Models.Student;
 import com.formdev.flatlaf.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -49,6 +51,8 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         btnNhapMoi = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSinhVien = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,12 +89,28 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         txtHocLuc.setEditable(false);
 
         chkPhanThuong.setText("Có phần thưởng?");
+        chkPhanThuong.setEnabled(false);
 
         btnThem.setText("THÊM");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnXoa.setText("XÓA");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnCapNhat.setText("CẬP NHẬT");
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhatActionPerformed(evt);
+            }
+        });
 
         btnNhapMoi.setText("NHẬP MỚI");
         btnNhapMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -101,16 +121,35 @@ public class QuanLySinhVien extends javax.swing.JFrame {
 
         tblSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "HỌ VÀ TÊN", "ĐIỂM", "NGÀNH", "HỌC LỰC", "THƯỞNG"
             }
         ));
+        tblSinhVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSinhVienMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblSinhVien);
+
+        jButton1.setText("Sắp xếp theo tên");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Sắp xếp theo điểm");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,7 +188,12 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtHoVaTen))))
+                            .addComponent(txtHoVaTen)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,7 +226,11 @@ public class QuanLySinhVien extends javax.swing.JFrame {
                     .addComponent(btnCapNhat)
                     .addComponent(btnNhapMoi))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -198,19 +246,102 @@ public class QuanLySinhVien extends javax.swing.JFrame {
         chkPhanThuong.setSelected(false);
     }//GEN-LAST:event_btnNhapMoiActionPerformed
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        addStudent();
+        fillToTable();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        removeStudent();
+        fillToTable();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        updateStudent();
+        fillToTable();
+    }//GEN-LAST:event_btnCapNhatActionPerformed
+
+    private void tblSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSinhVienMouseClicked
+        showDetail();
+    }//GEN-LAST:event_tblSinhVienMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        orderByName();
+        fillToTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        orderByMarks();
+        fillToTable();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     public void addStudent()
     {
-        
+        if(readForm() != null)
+        {
+            students.add(readForm());
+        }
+    }
+    
+    public Student readForm()
+    {
+        if(!txtHoVaTen.getText().equals("") && !txtDiem.getText().equals(""))
+        {
+            try
+            {
+                Student student = new Student();
+                student.setName(txtHoVaTen.getText());
+                double marks = Double.parseDouble(txtDiem.getText());
+                if(marks >= 0 && marks <= 10)
+                {
+                    student.setMarks(marks);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Điểm phải từ 0 - 10!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return null;
+                }
+                student.setMajor((String) cboNganh.getSelectedItem());
+                txtHocLuc.setText(student.getGrade());
+                chkPhanThuong.setSelected(student.isBonus());
+                return student;
+            }
+            catch(NumberFormatException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Điểm phải là một con số!", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtDiem.requestFocus();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Không được bỏ trống!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
     }
     
     public void removeStudent()
     {
-        
+        int index = tblSinhVien.getSelectedRow();
+        if(index != -1)
+        {
+            students.remove(index);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Xin chọn hàng trong bảng!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
     public void updateStudent()
     {
-        
+        if (tblSinhVien.getSelectedRow() == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Xin chọn hàng trong bảng!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if (readForm() != null)
+        {
+            students.set(tblSinhVien.getSelectedRow(), readForm());
+        }
     }
     
     public void fillToTable()
@@ -242,7 +373,25 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     
     public void showDetail()
     {
-        
+        if(tblSinhVien.getSelectedRow() != -1)
+        {
+            Student student = students.get(tblSinhVien.getSelectedRow());
+            txtHoVaTen.setText(student.getName());
+            txtDiem.setText(String.valueOf(student.getMarks()));
+            cboNganh.setSelectedItem(student.getMajor());
+            txtHocLuc.setText(student.getGrade());
+            chkPhanThuong.setSelected(student.isBonus());
+        }
+    }
+    
+    public void orderByName()
+    {
+        Collections.sort(students, Student.byName);
+    }
+    
+    public void orderByMarks()
+    {
+        Collections.sort(students, Student.byMarks);
     }
     
     /**
@@ -272,6 +421,8 @@ public class QuanLySinhVien extends javax.swing.JFrame {
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboNganh;
     private javax.swing.JCheckBox chkPhanThuong;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

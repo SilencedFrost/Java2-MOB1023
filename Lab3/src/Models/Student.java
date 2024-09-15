@@ -4,14 +4,16 @@
  */
 package Models;
 
+import java.util.Comparator;
+
 /**
  *
  * @author thnrg
  */
 public class Student {
-    public String name;
-    public double marks;
-    public String major;
+    protected String name;
+    protected double marks;
+    protected String major;
 
     public Student(String name, double marks, String major) {
         this.name = name;
@@ -75,5 +77,11 @@ public class Student {
         this.major = major;
     }
     
+    public static Comparator<Student> byName = (Student o1, Student o2) -> {
+        return o1.getName().compareTo(o2.getName());
+    };
     
+    public static Comparator<Student> byMarks = (Student o1, Student o2) -> {
+        return Double.compare(o2.getMarks(), o1.getMarks());
+    };
 }

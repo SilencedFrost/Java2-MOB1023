@@ -371,8 +371,7 @@ public class UserManagement extends javax.swing.JFrame {
     
     void updateUser()
     {
-        users.remove(index);
-        addUser();
+        users.set(index, readForm());
     }
     
     void clearForm()
