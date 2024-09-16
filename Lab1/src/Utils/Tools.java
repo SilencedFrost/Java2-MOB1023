@@ -7,7 +7,7 @@ package Utils;
 import java.util.Scanner;
 
 public class Tools {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     
     public static double getDouble(String message)
     {
@@ -36,5 +36,28 @@ public class Tools {
     {
         System.out.print(message);
         return scanner.nextLine();
+    }
+    
+    public static int getInt(String message)
+    {
+        int result = 0;
+        boolean check = false;
+
+        while (!check) {
+            System.out.print(message);
+            String input = scanner.nextLine();
+
+            try 
+            {
+                result = Integer.parseInt(input);
+                check = true;
+            } 
+            catch (NumberFormatException e) 
+            {
+                System.out.println("Not a double");
+            }
+        }
+
+        return result;
     }
 }
