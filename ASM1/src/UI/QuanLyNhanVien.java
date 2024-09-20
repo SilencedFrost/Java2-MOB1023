@@ -9,19 +9,25 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Utils.XFile;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 /**
  *
  * @author thnrg
  */
-public class QuanLyNhanVien extends javax.swing.JFrame /*implements Runnable*/
+public class QuanLyNhanVien extends javax.swing.JFrame implements Runnable
 {
-    private final ArrayList<Employee> employees = new ArrayList<>();
+    private ArrayList<Employee> employees = new ArrayList<>();
     private int index = 0;
     /**
      * Creates new form QuanLyNhanVien
      */
     public QuanLyNhanVien() {
+        Thread t1 = new Thread(this);
+        t1.start();
         initComponents();
         updateStatus();
     }
@@ -412,11 +418,6 @@ public class QuanLyNhanVien extends javax.swing.JFrame /*implements Runnable*/
         lblOrder.setText("Record: " + String.valueOf(tblNhanVien.getSelectedRow() + 1) + " of " + employees.size());
     }
     
-    public void showDetail()
-    {
-        
-    }
-    
     public void writeForm(Employee employee)
     {
         txtMaNhanVien.setText(employee.getCode());
@@ -428,12 +429,12 @@ public class QuanLyNhanVien extends javax.swing.JFrame /*implements Runnable*/
     
     public void openFile()
     {
-        
+        employees = (ArrayList<Employee>) XFile.readObject("src/Resources/employees.ser");
     }
     
     public void saveFile()
     {
-        
+        XFile.writeObject("src/Resources/employees.ser", employees);
     }
     
     public void addEmployee()
@@ -522,6 +523,24 @@ public class QuanLyNhanVien extends javax.swing.JFrame /*implements Runnable*/
         }
         JOptionPane.showMessageDialog(this, "Không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
         return null;
+    }
+    
+    @Override
+    public void run()
+    {
+        while(true)
+        {
+            try
+            {
+                ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC+7"));
+                System.out.println(now.toString());
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException e)
+            {
+                break;
+            }
+        }
     }
     
     /**
