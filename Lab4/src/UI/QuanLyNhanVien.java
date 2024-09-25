@@ -39,7 +39,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         txtHoVaTen = new javax.swing.JTextField();
         txtNgaySinh = new javax.swing.JTextField();
         txtLuong = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnKiemTra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý nhân viên");
@@ -55,10 +55,10 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
 
         jLabel4.setText("LƯƠNG");
 
-        jButton1.setText("KIỂM TRA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnKiemTra.setText("KIỂM TRA");
+        btnKiemTra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnKiemTraActionPerformed(evt);
             }
         });
 
@@ -87,7 +87,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(btnKiemTra)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(txtLuong))))))
                 .addContainerGap())
@@ -110,7 +110,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnKiemTra)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -118,34 +118,69 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnKiemTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKiemTraActionPerformed
+        kiemTraHoTen();
+        kiemTraNgay();
+        kiemTraLuong();
+    }//GEN-LAST:event_btnKiemTraActionPerformed
+
+    public void kiemTraNgay()
+    {
+        if(!txtNgaySinh.getText().equals(""))
+        {
+            try
+            {
+                SimpleDateFormat formatter = new SimpleDateFormat();
+                formatter.applyPattern("dd-MM-yyyy");
+                Date ngay = formatter.parse(txtNgaySinh.getText());
+            }
+            catch(ParseException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Ngày phải theo định dạng dd-MM-yyyy!", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtNgaySinh.requestFocus();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Ngày sinh không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtNgaySinh.requestFocus();
+        }
+    }
+    
+    public void kiemTraHoTen()
+    {
         if(txtHoVaTen.getText().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Họ và tên không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtHoVaTen.requestFocus();
         }
-        try
+    }
+    
+    public void kiemTraLuong()
+    {
+        if(!txtLuong.getText().equals(""))
         {
-            SimpleDateFormat formatter = new SimpleDateFormat();
-            formatter.applyPattern("dd-MM-yyyy");
-            Date ngay = formatter.parse(txtNgaySinh.getText());
+            try
+            {
+                Double luong = Double.valueOf(txtLuong.getText());
+                if(luong < 0)
+                {
+                    JOptionPane.showMessageDialog(this, "Lương không được là số âm", "Warning", JOptionPane.WARNING_MESSAGE);
+                    txtLuong.requestFocus();
+                }
+            }
+            catch(NumberFormatException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Lương phải là số", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtLuong.requestFocus();
+            }
         }
-        catch(ParseException ex)
+        else
         {
-            JOptionPane.showMessageDialog(this, "Ngày phải theo định dạng đ-MM-yyyy!", "Warning", JOptionPane.WARNING_MESSAGE);
-            txtNgaySinh.requestFocus();
-        }
-        try
-        {
-            Double.valueOf(txtLuong.getText());
-        }
-        catch(NumberFormatException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Lương phải là số", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Lương không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtLuong.requestFocus();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */
@@ -167,7 +202,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnKiemTra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

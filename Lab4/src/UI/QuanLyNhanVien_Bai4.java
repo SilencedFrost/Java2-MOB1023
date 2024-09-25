@@ -7,7 +7,6 @@ package UI;
 import Utils.Tools;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -120,31 +119,67 @@ public class QuanLyNhanVien_Bai4 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        kiemTraHoTen();
+        kiemTraNgay();
+        kiemTraLuong();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void kiemTraNgay()
+    {
+        if(!txtNgaySinh.getText().equals(""))
+        {
+            try
+            {
+                Date ngay = Tools.parseDate(txtNgaySinh.getText(), "dd-MM-yyyy");
+            }
+            catch(ParseException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Ngày phải theo định dạng dd-MM-yyyy!", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtNgaySinh.requestFocus();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Ngày sinh không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
+            txtNgaySinh.requestFocus();
+        }
+    }
+    
+    public void kiemTraHoTen()
+    {
         if(txtHoVaTen.getText().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Họ và tên không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtHoVaTen.requestFocus();
         }
-        try
+    }
+    
+    public void kiemTraLuong()
+    {
+        if(!txtLuong.getText().equals(""))
         {
-            Date ngay = Tools.parseDate(txtNgaySinh.getText(), "dd-MM-yyyy");
+            try
+            {
+                Double luong = Double.valueOf(txtLuong.getText());
+                if(luong < 0)
+                {
+                    JOptionPane.showMessageDialog(this, "Lương không được là số âm", "Warning", JOptionPane.WARNING_MESSAGE);
+                    txtLuong.requestFocus();
+                }
+            }
+            catch(NumberFormatException ex)
+            {
+                JOptionPane.showMessageDialog(this, "Lương phải là số", "Warning", JOptionPane.WARNING_MESSAGE);
+                txtLuong.requestFocus();
+            }
         }
-        catch(ParseException ex)
+        else
         {
-            JOptionPane.showMessageDialog(this, "Ngày phải theo định dạng đ-MM-yyyy!", "Warning", JOptionPane.WARNING_MESSAGE);
-            txtNgaySinh.requestFocus();
-        }
-        try
-        {
-            Double.valueOf(txtLuong.getText());
-        }
-        catch(NumberFormatException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Lương phải là số", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Lương không được để trống!", "Warning", JOptionPane.WARNING_MESSAGE);
             txtLuong.requestFocus();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
