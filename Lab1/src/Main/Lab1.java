@@ -33,21 +33,26 @@ public class Lab1 {
         }
     }
     
-    public static void bai2()
+    public static Product getProductData(int i)
     {
-        ArrayList<Product> product = new ArrayList();
-        
-        //Output
-        for(int i = 0; i < 5; i++)
-        {
-            Product tempProduct = new Product();
-            System.out.printf("Product number %d:\n", i + 1);
-            tempProduct.setName(Tools.getString("Product name: "));
-            tempProduct.setPrice(Tools.getDouble("Product price: "));
-            product.add(tempProduct);
-        }
-        
-        //Input
+        Product tempProduct = new Product();
+        System.out.printf("Product number %d:\n", i + 1);
+        tempProduct.setName(Tools.getString("Product name: "));
+        tempProduct.setPrice(Tools.getDouble("Product price: "));
+        return tempProduct;
+    }
+    
+    public static NoTaxProduct getNoTaxProductData(int i)
+    {
+        NoTaxProduct tempProduct = new NoTaxProduct();
+        System.out.printf("Product number %d:\n", i + 1);
+        tempProduct.setName(Tools.getString("Product name: "));
+        tempProduct.setPrice(Tools.getDouble("Product price: "));
+        return tempProduct;
+    }
+    
+    public static void output(ArrayList<Product> product)
+    {
         System.out.println("Output: ");
         for(Product tempProduct: product)
         {
@@ -55,53 +60,45 @@ public class Lab1 {
         }
     }
     
+    public static void bai2()
+    {
+        ArrayList<Product> product = new ArrayList();
+        
+        //Input
+        for(int i = 0; i < 5; i++)
+        {
+            product.add(getProductData(i));
+        }
+        
+        //Output
+        output(product);
+    }
+    
     public static void bai3()
     {
         ArrayList<Product> product = new ArrayList();
-        Product tempProduct;
+        
         //Input
         for(int i = 0; i < 2; i++)
         {
-            tempProduct = new Product();
-            System.out.printf("Product number %d:\n", i + 1);
-            tempProduct.setName(Tools.getString("Product name: "));
-            tempProduct.setPrice(Tools.getDouble("Product price: "));
-            product.add(tempProduct);
+            product.add(getProductData(i));
         }
-        
-        tempProduct = new NoTaxProduct();
-        System.out.println("Product number 3:");
-        tempProduct.setName(Tools.getString("Product name: "));
-        tempProduct.setPrice(Tools.getDouble("Product price: "));
-        product.add(tempProduct);
+        product.add(getNoTaxProductData(3));
         
         //Output
-        System.out.println("Output: ");
-        for(Product temp: product)
-        {
-            System.out.printf("Product name: %s, price: %f, import tax: %f\n", temp.getName(), temp.getPrice(), temp.getImportTax());
-        }
+        output(product);
     }
     
     public static void bai4()
     {
         ArrayList<Product> product = new ArrayList();
-        Product tempProduct;
-        //Input
+        
+         //Input
         for(int i = 0; i < 2; i++)
         {
-            tempProduct = new Product();
-            System.out.printf("Product number %d:\n", i + 1);
-            tempProduct.setName(Tools.getString("Product name: "));
-            tempProduct.setPrice(Tools.getDouble("Product price: "));
-            product.add(tempProduct);
+            product.add(getProductData(i));
         }
-        
-        tempProduct = new NoTaxProduct();
-        System.out.println("Product number 3:");
-        tempProduct.setName(Tools.getString("Product name: "));
-        tempProduct.setPrice(Tools.getDouble("Product price: "));
-        product.add(tempProduct);
+        product.add(getNoTaxProductData(3));
         
         //Output
         System.out.println("Output: ");

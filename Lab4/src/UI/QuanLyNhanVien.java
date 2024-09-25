@@ -181,6 +181,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
             txtLuong.requestFocus();
         }
     }
+    
     /**
      * @param args the command line arguments
      */
