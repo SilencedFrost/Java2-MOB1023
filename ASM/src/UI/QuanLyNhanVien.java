@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Utils.XFile;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -26,10 +25,10 @@ public class QuanLyNhanVien extends javax.swing.JFrame implements Runnable
      * Creates new form QuanLyNhanVien
      */
     public QuanLyNhanVien() {
-        Thread t1 = new Thread(this);
-        t1.start();
         initComponents();
         updateStatus();
+        Thread t1 = new Thread(this);
+        t1.start();
     }
 
     /**
@@ -532,9 +531,12 @@ public class QuanLyNhanVien extends javax.swing.JFrame implements Runnable
         {
             try
             {
-                ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC+7"));
-                System.out.println(now.toString());
-                Thread.sleep(1000);
+                Date now = new Date();
+                SimpleDateFormat formater = new SimpleDateFormat();
+                formater.applyPattern("hh:mm aa");
+                String time = formater.format(now);
+                lblClock.setText(time);
+                Thread.sleep(60000);
             }
             catch(InterruptedException e)
             {
