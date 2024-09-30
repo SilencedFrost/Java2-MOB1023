@@ -4,8 +4,8 @@
  */
 package Main;
 
-import Classes.MinhThread;
-import UI.Clock;
+import Classes.*;
+import UI.*;
 import Utils.Tools;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.JFrame;
@@ -25,7 +25,7 @@ public class Lab6 {
         int excerise = 0;
         while(excerise < 1 || excerise > 4)
         {
-            excerise = Tools.getInt("Choose exercise (2-4): ");
+            excerise = Tools.getInt("Choose exercise (1-4): ");
         }
         switch(excerise)
         {
@@ -38,8 +38,8 @@ public class Lab6 {
 
     private static void bai1() 
     {
-        Thread thread1 = new Thread(new MinhThread());
-        Thread thread2 = new Thread(new MinhThread());
+        Thread thread1 = new Thread(new MyThread());
+        Thread thread2 = new Thread(new MyThread());
         
         thread1.setPriority(Thread.MAX_PRIORITY);
         thread2.setPriority(Thread.MIN_PRIORITY);
@@ -56,12 +56,23 @@ public class Lab6 {
 
     private static void bai3() 
     {
-        
+        Thread t1 = new OddThread();
+        Thread t2 = new EvenThread();
+        t1.start();
+        try
+        {
+             t1.join();
+        }
+        catch(InterruptedException ex)
+        {
+        }
+        t2.start();
     }
 
     private static void bai4() 
     {
-        
+        JFrame xosokienthiet = new XoSoKienThiet();
+        xosokienthiet.setVisible(true);
     }
     
 }

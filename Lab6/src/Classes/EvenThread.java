@@ -8,22 +8,22 @@ package Classes;
  *
  * @author thnrg
  */
-public class MinhThread implements Runnable
+public class EvenThread extends Thread
 {
-    
     @Override
     public void run()
     {
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 5; i++)
         {
-            try 
+            try
             {
-                Thread.sleep(500);
-            } 
-            catch (InterruptedException ex) 
-            {
+                System.out.println(i * 2 + 2);
+                Thread.sleep(15);
             }
-            System.out.println(i + 1);
-        } 
+            catch(InterruptedException ex)
+            {
+                break;
+            }
+        }
     }
 }
