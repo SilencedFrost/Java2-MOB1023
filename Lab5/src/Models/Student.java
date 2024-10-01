@@ -11,9 +11,9 @@ import java.io.Serializable;
  * @author thnrg
  */
 public class Student implements Serializable{
-    public String name;
-    public double marks;
-    public String major;
+    protected String name;
+    protected double marks;
+    protected String major;
 
     public Student(String name, double marks, String major) {
         this.name = name;

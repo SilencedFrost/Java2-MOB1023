@@ -27,7 +27,6 @@ public class XFile {
         }
         catch(IOException ex)
         {
-            ex.printStackTrace();
         }
         return data;
     }
@@ -46,7 +45,6 @@ public class XFile {
         }
         catch(IOException ex)
         {
-            ex.printStackTrace();
         }
     }
     
@@ -65,7 +63,6 @@ public class XFile {
         }
         catch(Exception ex)
         {
-            ex.printStackTrace();
         }
         return null;
     }
@@ -84,7 +81,6 @@ public class XFile {
         }
         catch(IOException ex)
         {
-            ex.printStackTrace();
         }
     }
 }

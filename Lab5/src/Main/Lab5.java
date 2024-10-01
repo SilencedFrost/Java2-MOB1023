@@ -5,8 +5,11 @@
 package Main;
 
 import Models.*;
+import UI.QuanLyNhanVien;
 import Utils.*;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 /**
  *
  * @author thnrg
@@ -18,6 +21,7 @@ public class Lab5 {
      */
     public static void main(String[] args)
     {
+        FlatLightLaf.setup();
         int excerise = 0;
         while(excerise < 1 || excerise > 4)
         {
@@ -47,12 +51,13 @@ public class Lab5 {
         
         ArrayList<Student> list2 = (ArrayList<Student>) XFile.readObject("src/Files/students.dat");
         for(Student sv : list2){
-            System.out.println(">Ho va ten: " + sv.name);
+            System.out.println(">Ho va ten: " + sv.getName());
         }
     }
 
     private static void bai3() {
-        
+        JFrame quanlynhanvien = new QuanLyNhanVien();
+        quanlynhanvien.setVisible(true);
     }
 
     private static void bai4() {
