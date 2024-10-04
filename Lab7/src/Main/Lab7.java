@@ -6,8 +6,12 @@ package Main;
 
 import Enums.Career;
 import Models.PolyStudent;
+import UI.SuDungMath;
+import UI.Sum;
+import UI.XPoly;
 import Utils.Tools;
 import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.JFrame;
 
 /**
  *
@@ -50,16 +54,19 @@ public class Lab7 {
     
     private void bai2() 
     {
-        
+        JFrame sum = new Sum();
+        sum.setVisible(true);
     }
     
     private void bai3() 
     {
-        
+        JFrame suDungMath = new SuDungMath();
+        suDungMath.setVisible(true);
     }
     
     private void bai4() 
     {
-        
+        JFrame xPoly = new XPoly();
+        xPoly.setVisible(true);
     }
 }

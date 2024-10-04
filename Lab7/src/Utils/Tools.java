@@ -82,4 +82,16 @@ public class Tools {
             return false;
         }
     }
+    
+    public static boolean isLong(String str) {
+        try 
+        {
+            Long.valueOf(str);
+            return true;
+        } 
+        catch (NumberFormatException e) 
+        {
+            return false;
+        }
+    }
 }
