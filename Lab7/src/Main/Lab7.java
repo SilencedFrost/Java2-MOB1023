@@ -28,9 +28,9 @@ public class Lab7 {
         int exercise = 0;
 
         Lab7 lab7 = new Lab7(); 
-        while(exercise < 1 || exercise > 6)
+        while(exercise < 1 || exercise > 4)
         {
-            exercise = Tools.getInt("Choose exercise (1-6): ");
+            exercise = Tools.getInt("Choose exercise (1-4): ");
         }
 
         switch(exercise)
