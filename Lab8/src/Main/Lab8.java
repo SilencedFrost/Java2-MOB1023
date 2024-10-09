@@ -4,6 +4,8 @@
  */
 package Main;
 
+import DAO.ProductDAO;
+import Models.Product;
 import Utils.*;
 import java.util.ArrayList;
 
@@ -68,12 +70,26 @@ public class Lab8 {
     
     public void bai3()
     {
-        
+        //Đã tạo class product và abstract class DAO theo đề
+        System.out.println("Da tao class Product va abstract class DAO");
     }
     
     public void bai4()
     {
+        Product p1 = new Product("iPhone9", 1000.0);
+        Product p2 = new Product("Samsung Start", 3000.0);
         
+        ProductDAO dao = new ProductDAO();
+        dao.add(p1);
+        dao.add(p2);
+        
+        dao.store("src/Files/products.dat");
+        
+        ProductDAO dao2 = new ProductDAO();
+        dao2.load("src/Files/products.dat");
+        Product p = dao2.find("iPhone9");
+        System.out.println(">Name: " + p.getName());
+        System.out.println(">Price: " + p.getPrice());
     }
     
 }
