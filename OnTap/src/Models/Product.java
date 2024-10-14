@@ -4,13 +4,14 @@
  */
 package Models;
 
+import Utils.Exportable;
 import java.io.Serializable;
 
 /**
  *
  * @author thnrg
  */
-public class Product implements Serializable{
+public class Product implements Serializable, Exportable{
     protected String productID;
     protected String productName;
     protected Double productPrice;
@@ -46,5 +47,11 @@ public class Product implements Serializable{
 
     public void setProductPrice(Double gia) {
         this.productPrice = gia;
+    }
+    
+    @Override
+    public Object[] toObjectArray()
+    {
+        return new Object[] {productID, productName, productPrice};
     }
 }

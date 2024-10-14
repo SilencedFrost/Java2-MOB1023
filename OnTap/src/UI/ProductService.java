@@ -4,21 +4,20 @@
  */
 package UI;
 
+import DAO.ProductDAO;
 import Models.Product;
-import Utils.Tools;
-import Utils.XFile;
+import Utils.SHelper;
+import Utils.SwingHelper;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author thnrg
  */
 public class ProductService extends javax.swing.JFrame {
-    protected ArrayList<Product> products = new ArrayList<>();
+    protected SwingHelper<ProductDAO> swingHelper = new SwingHelper<>(new ProductDAO("src/Files/Product.dat"));
     
     /**
      * Creates new form SanPhamService
@@ -229,212 +228,120 @@ public class ProductService extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if(readForm() != null)
+        if(readFormWithIDValidation() != null)
         {
-            products.add(readForm());
+            swingHelper.getDAO().getItems().add(readFormWithIDValidation());
             JOptionPane.showMessageDialog(this, "Thêm thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
-            loadToTable();
+            swingHelper.loadToTable(tblProduct);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnFakeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFakeDataActionPerformed
-        products = (ArrayList<Product>) XFile.readObject("src/Files/FakeData.dat");
-        if(products == null){products = new ArrayList<>();}
-        loadToTable();
+        swingHelper.getDAO().load("src/Files/FakeData.dat");
+        swingHelper.loadToTable(tblProduct);
     }//GEN-LAST:event_btnFakeDataActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        ArrayList<Product> filteredProducts = findNames(txtSearch.getText());
-        if(!filteredProducts.isEmpty())
+        String filter = txtSearch.getText();
+        try
         {
-            loadToTable(filteredProducts);
+            if(swingHelper.loadToTableFiltered(tblProduct, Product.class.getMethod("getProductName"), filter) == SHelper.NOT_FOUND_ERROR){JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);}
         }
-        else
+        catch(NoSuchMethodException | SecurityException ex)
         {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        saveToFile();
+        swingHelper.getDAO().save();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
-        loadToList();
+        swingHelper.getDAO().load();
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        saveToFile();
+        swingHelper.getDAO().save();
         System.out.println("File saved successfully");
     }//GEN-LAST:event_formWindowClosing
 
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
         if(tblProduct.getSelectedRow() != -1)
         {
-            writeForm(products.get(tblProduct.getSelectedRow()));
+            try
+            {
+                writeForm(swingHelper.getDAO().findIndex(Product.class.getMethod("getProductID"), tblProduct.getValueAt(tblProduct.getSelectedRow(), 0).toString()));
+            }
+            catch(NoSuchMethodException | SecurityException ex)
+            {
+                ex.printStackTrace();
+            }
         }
-        
     }//GEN-LAST:event_tblProductMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         updateProduct();
-        loadToTable();
+        swingHelper.loadToTable(tblProduct);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     public void updateProduct()
     {
-        int index = findID(txtProductID.getText());
-        if(index != -1)
+        try
         {
-            products.set(index, new Product(txtProductID.getText(), txtProductName.getText(), Double.valueOf(txtProductPrice.getText())));
-            JOptionPane.showMessageDialog(this, "Sửa thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
+            int index = swingHelper.getDAO().findIndex(Product.class.getMethod("getProductID"), txtProductID.getText());
+            
+            if(index != -1)
+            {
+                swingHelper.getDAO().getItems().set(index, readForm());
+                JOptionPane.showMessageDialog(this, "Sửa thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy mã sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
         }
-        else
+        catch(NoSuchMethodException | SecurityException ex)
         {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy mã sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
+            ex.printStackTrace();
         }
     }
     
     public Product readForm()
-    {   
-        if(isEmptyFieldWarning(txtProductID, "Mã sản phẩm không được để trống!")){return null;}
-        if(isProductIDMatched(txtProductID, "Mã sản phẩm không được trùng!")){return null;}
-        if(isEmptyFieldWarning(txtProductName, "Tên sản phẩm không được để trống!")){return null;}
-        if(isEmptyFieldWarning(txtProductPrice, "Giá sản phẩm không được để trống!")){return null;}
-        if(isPriceInvalidWarning(txtProductPrice, "Giá phải là số nguyên!", "Giá không được là số âm!")){return null;}
-        
+    {
+        if(!swingHelper.isNameResolve(txtProductName, this, "Tên sản phẩm không được để trống!")){return null;}
+        if(!swingHelper.isPriceResolve(txtProductPrice, this, "Giá sản phẩm không được để trống!", "Giá phải là số nguyên!", "Giá không được là số âm!")){return null;}
         return new Product(txtProductID.getText(), txtProductName.getText(), Double.valueOf(txtProductPrice.getText()));
     }
     
-    public void writeForm(Product product)
+    public Product readFormWithIDValidation()
+    {   
+        try
+        {
+            if(!swingHelper.isIDResolve(Product.class.getMethod("getProductID"), txtProductID, this, "Mã sản phẩm không được để trống!", "Mã sản phẩm không được trùng!")){return null;}
+        }
+        catch(NoSuchMethodException | SecurityException ex)
+        {
+            ex.printStackTrace();
+        }
+        return readForm();
+    }
+    
+    public void writeForm(int index)
     {
+        Product product = (Product) swingHelper.getDAO().getItems().get(index);
         txtProductID.setText(product.getProductID());
         txtProductName.setText(product.getProductName());
         txtProductPrice.setText(product.getProductPrice().toString());
     }
     
-    public boolean isEmptyFieldWarning(JTextField txtField, String message)
-    {
-        if(txtField.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
-            txtField.requestFocus();
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean isPriceInvalidWarning(JTextField txtField, String nanWarning, String negativeWarning)
-    {
-        if(!Tools.isDouble(txtField.getText()))
-        {
-            JOptionPane.showMessageDialog(this, nanWarning, "Warning", JOptionPane.WARNING_MESSAGE);
-            txtField.requestFocus();
-            return true;
-        }
-        if(Double.parseDouble(txtField.getText()) < 0)
-        {
-            JOptionPane.showMessageDialog(this, negativeWarning, "Warning", JOptionPane.WARNING_MESSAGE);
-            txtField.requestFocus();
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean isProductIDMatched(JTextField txtField, String message)
-    {
-        if(findID(txtField.getText()) != -1)
-        {
-            JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
-            txtField.requestFocus();
-            return true;
-        }
-        return false;
-    }
-    
-    public int findID(String id)
-    {
-        for(Product product: products)
-        {
-            if(product.getProductID().equalsIgnoreCase(id))
-            {
-                return products.indexOf(product);
-            }
-        }
-        return -1;
-    }
-    
-    public int findName(String name)
-    {
-        for(Product product: products)
-        {
-            if(product.getProductName().equalsIgnoreCase(name))
-            {
-                return products.indexOf(product);
-            }
-        }
-        return -1;
-    }
-    
-    public ArrayList<Product> findNames(String name)
-    {
-        ArrayList<Product> filteredProducts = new ArrayList<>();
-        
-        for(Product product: products)
-        {
-            if(product.getProductName().toLowerCase().contains(name.toLowerCase()))
-            {
-                filteredProducts.add(product);
-            }
-        }
-        return filteredProducts;
-    }
-    
     private void onRun()
     {
-        loadToList();
-        loadToTable();
+        swingHelper.loadToTable(tblProduct);
         if(tblProduct.getRowCount() >= 3)
         {
-            writeForm(products.get(2));
+            writeForm(2);
         }
-    }
-    
-    public void saveToFile()
-    {
-        XFile.writeObject("src/Files/Product.dat", products);
-    }
-    
-    public void loadToList()
-    {
-        products = (ArrayList<Product>) XFile.readObject("src/Files/Product.dat");
-        if(products == null){products = new ArrayList<>();}
-    }
-    
-    public void loadToTable()
-    {
-        DefaultTableModel tbl = (DefaultTableModel) tblProduct.getModel();
-        tbl.setRowCount(0);
-        
-        for(Product product: products)
-        {
-            tbl.addRow(new Object[] {product.getProductID(), product.getProductName(), product.getProductPrice()});
-        }
-        
-        tblProduct.setModel(tbl);
-    }
-    
-    public void loadToTable(ArrayList<Product> arrList)
-    {
-        DefaultTableModel tbl = (DefaultTableModel) tblProduct.getModel();
-        tbl.setRowCount(0);
-        
-        for(Product product: arrList)
-        {
-            tbl.addRow(new Object[] {product.getProductID(), product.getProductName(), product.getProductPrice()});
-        }
-        
-        tblProduct.setModel(tbl);
     }
     
     /**
