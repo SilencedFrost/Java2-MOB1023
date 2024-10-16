@@ -87,17 +87,24 @@ public class SwingHelper<Data extends DAO<Item>, Item>
         txtField.requestFocus();
     }
     
+    public DefaultTableModel getTblModel(DefaultTableModel model, ArrayList<Item> list)
+    {
+        model.setRowCount(0);
+        for (Item item : list)
+        {
+            model.addRow(data.getDataAsObjectArray(item));
+        }
+        return model;
+    }
+    
+    public DefaultTableModel getTblModel(ArrayList<Item> list)
+    {
+        return getTblModel(new DefaultTableModel(), list);
+    }
+    
     public DefaultTableModel getTblModel(DefaultTableModel baseModel)
     {
-        DefaultTableModel tbl = baseModel;
-        tbl.setRowCount(0);
-        
-        for(int i = 0; i < data.getItems().size(); i++)
-        {
-            tbl.addRow(data.getDataAsObjectArray(i));
-        }
-        
-        return tbl;
+        return getTblModel(baseModel, data.getItems());
     }
     
     public DefaultTableModel getTblModel()
@@ -107,17 +114,12 @@ public class SwingHelper<Data extends DAO<Item>, Item>
     
     public DefaultTableModel getTblModelFiltered(DefaultTableModel baseModel, Function<? super Item, String> getter, String filter)
     {
-        DefaultTableModel tbl = baseModel;
-        tbl.setRowCount(0);
+        DefaultTableModel model = baseModel;
         
         ArrayList<Item> list = data.findHasFilter(getter, filter);
         if(!list.isEmpty())
         {
-            for(Item item: list)
-            {
-                tbl.addRow(data.getDataAsObjectArray(item));
-            }
-            return tbl;
+            return getTblModel(model, list);
         }
         return null;
     }
