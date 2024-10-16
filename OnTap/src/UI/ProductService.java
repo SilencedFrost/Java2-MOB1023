@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
  * @author thnrg
  */
 public class ProductService extends javax.swing.JFrame {
-    protected SwingHelper<ProductDAO, Product> swingHelper = new SwingHelper<>(new ProductDAO("src/Files/Product.dat"));
+    protected ProductDAO dao = new ProductDAO("src/Files/Product.dat");
+    protected SwingHelper<ProductDAO, Product> swingHelper = new SwingHelper<>(dao);
     
     /**
      * Creates new form SanPhamService
@@ -229,39 +230,42 @@ public class ProductService extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         if(readFormWithIDValidation() != null)
         {
-            swingHelper.getDAO().getItems().add(readFormWithIDValidation());
+            dao.getItems().add(readFormWithIDValidation());
             JOptionPane.showMessageDialog(this, "Thêm thành công!", "Information", JOptionPane.INFORMATION_MESSAGE);
             swingHelper.loadToTable(tblProduct);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnFakeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFakeDataActionPerformed
-        swingHelper.getDAO().load("src/Files/FakeData.dat");
+        dao.load("src/Files/FakeData.dat");
         swingHelper.loadToTable(tblProduct);
     }//GEN-LAST:event_btnFakeDataActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String filter = txtSearch.getText();
-        if(swingHelper.loadToTableFiltered(tblProduct, Product::getProductName, filter) == SHelper.NOT_FOUND_ERROR){JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);}
+        if(swingHelper.loadToTableFiltered(tblProduct, Product::getProductName, filter) == SHelper.NOT_FOUND_ERROR)
+        {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        swingHelper.getDAO().save();
+        dao.save();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
-        swingHelper.getDAO().load();
+        dao.load();
     }//GEN-LAST:event_btnLoadActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        swingHelper.getDAO().save();
+        dao.save();
         System.out.println("File saved successfully");
     }//GEN-LAST:event_formWindowClosing
 
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
         if(tblProduct.getSelectedRow() != -1)
         {
-            writeForm(swingHelper.getDAO().findIndex(Product::getProductID, tblProduct.getValueAt(tblProduct.getSelectedRow(), 0).toString()));
+            writeForm(dao.findIndex(Product::getProductID, tblProduct.getValueAt(tblProduct.getSelectedRow(), 0).toString()));
         }
     }//GEN-LAST:event_tblProductMouseClicked
 
@@ -272,11 +276,11 @@ public class ProductService extends javax.swing.JFrame {
 
     public void updateProduct()
     {
-        int index = swingHelper.getDAO().findIndex(Product::getProductID, txtProductID.getText());
+        int index = dao.findIndex(Product::getProductID, txtProductID.getText());
 
         if(index != -1)
         {
-            swingHelper.getDAO().getItems().set(index, readForm());
+            dao.getItems().set(index, readForm());
             JOptionPane.showMessageDialog(this, "Sửa thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
         else
@@ -300,7 +304,7 @@ public class ProductService extends javax.swing.JFrame {
     
     public void writeForm(int index)
     {
-        Product product = (Product) swingHelper.getDAO().getItems().get(index);
+        Product product = (Product) dao.getItems().get(index);
         txtProductID.setText(product.getProductID());
         txtProductName.setText(product.getProductName());
         txtProductPrice.setText(product.getProductPrice().toString());
@@ -328,10 +332,8 @@ public class ProductService extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProductService().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ProductService().setVisible(true);
         });
     }
 

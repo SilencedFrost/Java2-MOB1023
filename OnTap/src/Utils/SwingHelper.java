@@ -27,11 +27,6 @@ public class SwingHelper<Data extends DAO<Item>, Item>
         this.data = daoObject;
     }
     
-    public Data getDAO()
-    {
-        return data;
-    }
-    
     public SHelper isID(Function<? super Item, String> idGetter, String string)
     {
         if(string.equals("")){return SHelper.EMPTY_ERROR;}
