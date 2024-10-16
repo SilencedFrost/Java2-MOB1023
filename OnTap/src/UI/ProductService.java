@@ -9,7 +9,6 @@ import Models.Product;
 import Utils.SHelper;
 import Utils.SwingHelper;
 import com.formdev.flatlaf.FlatLightLaf;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author thnrg
  */
 public class ProductService extends javax.swing.JFrame {
-    protected SwingHelper<ProductDAO> swingHelper = new SwingHelper<>(new ProductDAO("src/Files/Product.dat"));
+    protected SwingHelper<ProductDAO, Product> swingHelper = new SwingHelper<>(new ProductDAO("src/Files/Product.dat"));
     
     /**
      * Creates new form SanPhamService
@@ -243,14 +242,7 @@ public class ProductService extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String filter = txtSearch.getText();
-        try
-        {
-            if(swingHelper.loadToTableFiltered(tblProduct, Product.class.getMethod("getProductName"), filter) == SHelper.NOT_FOUND_ERROR){JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);}
-        }
-        catch(NoSuchMethodException | SecurityException ex)
-        {
-            ex.printStackTrace();
-        }
+        if(swingHelper.loadToTableFiltered(tblProduct, Product::getProductName, filter) == SHelper.NOT_FOUND_ERROR){JOptionPane.showMessageDialog(this, "Không tìm thấy tên sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);}
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -269,14 +261,7 @@ public class ProductService extends javax.swing.JFrame {
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
         if(tblProduct.getSelectedRow() != -1)
         {
-            try
-            {
-                writeForm(swingHelper.getDAO().findIndex(Product.class.getMethod("getProductID"), tblProduct.getValueAt(tblProduct.getSelectedRow(), 0).toString()));
-            }
-            catch(NoSuchMethodException | SecurityException ex)
-            {
-                ex.printStackTrace();
-            }
+            writeForm(swingHelper.getDAO().findIndex(Product::getProductID, tblProduct.getValueAt(tblProduct.getSelectedRow(), 0).toString()));
         }
     }//GEN-LAST:event_tblProductMouseClicked
 
@@ -287,23 +272,16 @@ public class ProductService extends javax.swing.JFrame {
 
     public void updateProduct()
     {
-        try
+        int index = swingHelper.getDAO().findIndex(Product::getProductID, txtProductID.getText());
+
+        if(index != -1)
         {
-            int index = swingHelper.getDAO().findIndex(Product.class.getMethod("getProductID"), txtProductID.getText());
-            
-            if(index != -1)
-            {
-                swingHelper.getDAO().getItems().set(index, readForm());
-                JOptionPane.showMessageDialog(this, "Sửa thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy mã sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
-            }
+            swingHelper.getDAO().getItems().set(index, readForm());
+            JOptionPane.showMessageDialog(this, "Sửa thành công", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
-        catch(NoSuchMethodException | SecurityException ex)
+        else
         {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Không tìm thấy mã sản phẩm!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
     
@@ -316,14 +294,7 @@ public class ProductService extends javax.swing.JFrame {
     
     public Product readFormWithIDValidation()
     {   
-        try
-        {
-            if(!swingHelper.isIDResolve(Product.class.getMethod("getProductID"), txtProductID, this, "Mã sản phẩm không được để trống!", "Mã sản phẩm không được trùng!")){return null;}
-        }
-        catch(NoSuchMethodException | SecurityException ex)
-        {
-            ex.printStackTrace();
-        }
+        if(!swingHelper.isIDResolve(Product::getProductID, txtProductID, this, "Mã sản phẩm không được để trống!", "Mã sản phẩm không được trùng!")){return null;}
         return readForm();
     }
     

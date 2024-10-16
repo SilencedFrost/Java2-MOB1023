@@ -4,10 +4,8 @@
  */
 package Utils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.function.Function;
 /**
  *
  * @author thnrg
@@ -33,7 +31,7 @@ public abstract class DAO<Item>
         return getDataAsObjectArray(items.get(index));
     }
     
-    public Object[] getDataAsObjectArray(Item item) {
+    public Object[] getDataAsObjectArray(Object item) {
         if (item == null) 
         {
             return null;
@@ -76,65 +74,44 @@ public abstract class DAO<Item>
         this.items = items;
     }
     
-    public int findIndex(Method getter, String filter) 
+    public int findIndex(Function<? super Item, String> getter, String filter) 
     {
         for (int i = 0; i < items.size(); i++) 
         {
             Item item = items.get(i);
-            try 
+            Object itemId = getter.apply(item);
+            if (itemId != null && itemId.equals(filter)) 
             {
-                Object itemId = getter.invoke(item);
-                if (itemId != null && itemId.equals(filter)) 
-                {
-                    return i;
-                }
-            } 
-            catch (IllegalAccessException | InvocationTargetException ex) 
-            {
-                ex.printStackTrace();
+                return i;
             }
         }
         return -1;
     }
     
-    public Item findMatchFilter(Method getter, String filter) 
+    public Item findMatchFilter(Function<? super Item, String> getter, String filter) 
     {
         for (Item item : items) 
         {
-            try 
+            Object itemId = getter.apply(item);
+            if (itemId != null && itemId.equals(filter)) 
             {
-                Object itemId = getter.invoke(item);
-                if (itemId != null && itemId.equals(filter)) 
-                {
-                    return item;
-                }
-            } 
-            catch (IllegalAccessException | InvocationTargetException ex) 
-            {
-                ex.printStackTrace();
+                return item;
             }
         }
         return null;
     }
     
-    public ArrayList<Item> findHasFilter(Method getter, String filter) 
+    public ArrayList<Item> findHasFilter(Function<? super Item, String> getter, String filter) 
     {
         ArrayList<Item> filteredItems = new ArrayList<>();
         String searchId = filter.toLowerCase();
 
         for (Item item : items) 
         {
-            try 
+            Object itemId = getter.apply(item);
+            if (itemId != null && itemId.toString().toLowerCase().contains(searchId)) 
             {
-                Object itemId = getter.invoke(item);
-                if (itemId != null && itemId.toString().toLowerCase().contains(searchId)) 
-                {
-                    filteredItems.add(item);
-                }
-            } 
-            catch (IllegalAccessException | InvocationTargetException ex) 
-            {
-                ex.printStackTrace();
+                filteredItems.add(item);
             }
         }
         return filteredItems;

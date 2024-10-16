@@ -4,8 +4,8 @@
  */
 package Utils;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.function.Function;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -16,8 +16,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author thnrg
  * @param <Data>
+ * @param <Item>
  */
-public class SwingHelper<Data extends DAO> 
+public class SwingHelper<Data extends DAO<Item>, Item> 
 {
     protected Data data;
     
@@ -31,7 +32,7 @@ public class SwingHelper<Data extends DAO>
         return data;
     }
     
-    public SHelper isID(Method idGetter, String string)
+    public SHelper isID(Function<? super Item, String> idGetter, String string)
     {
         if(string.equals("")){return SHelper.EMPTY_ERROR;}
         if(data.findIndex(idGetter, string) != -1) {return SHelper.ALREADY_EXIST_ERROR;}
@@ -52,7 +53,7 @@ public class SwingHelper<Data extends DAO>
         return SHelper.TRUE;
     }
     
-    public boolean isIDResolve(Method idGetter, JTextField txtField, JFrame parentComponent, String emptyError, String alreadyExistError)
+    public boolean isIDResolve(Function<? super Item, String> idGetter, JTextField txtField, JFrame parentComponent, String emptyError, String alreadyExistError)
     {
         switch(isID(idGetter, txtField.getText()))
         {
@@ -109,24 +110,24 @@ public class SwingHelper<Data extends DAO>
         return getTblModel(new DefaultTableModel());
     }
     
-    public DefaultTableModel getTblModelFiltered(DefaultTableModel baseModel, Method getter, String filter)
+    public DefaultTableModel getTblModelFiltered(DefaultTableModel baseModel, Function<? super Item, String> getter, String filter)
     {
         DefaultTableModel tbl = baseModel;
         tbl.setRowCount(0);
         
-        ArrayList<Object> list = data.findHasFilter(getter, filter);
+        ArrayList<Item> list = data.findHasFilter(getter, filter);
         if(!list.isEmpty())
         {
-            for(Object object: list)
+            for(Item item: list)
             {
-                tbl.addRow(data.getDataAsObjectArray(object));
+                tbl.addRow(data.getDataAsObjectArray(item));
             }
             return tbl;
         }
         return null;
     }
     
-    public DefaultTableModel getTblModelFiltered(Method getter, String filter)
+    public DefaultTableModel getTblModelFiltered(Function<? super Item, String> getter, String filter)
     {
         return getTblModelFiltered(new DefaultTableModel(), getter, filter);
     }
@@ -136,7 +137,7 @@ public class SwingHelper<Data extends DAO>
         tbl.setModel(getTblModel((DefaultTableModel) tbl.getModel()));
     }
     
-    public SHelper loadToTableFiltered(JTable tbl, Method getter, String filter)
+    public SHelper loadToTableFiltered(JTable tbl, Function<? super Item, String> getter, String filter)
     {
         DefaultTableModel model = getTblModelFiltered((DefaultTableModel) tbl.getModel(), getter, filter);
         if(model == null)
