@@ -38,3 +38,25 @@ Tiếp đến là sử dụng SwingHelper
 Ví dụ:
 
 ![{0D6E4A32-0416-4489-9EF5-53C8466A7346}](https://github.com/user-attachments/assets/6e706f4b-ea89-44c0-904d-55b4b89f0d5f)
+
+Vậy là bây giờ bạn có thể gọi swingHelper hoặc dao từ bất cứ đâu trong file
+- swingHelper là các tiện ích Swing
+- dao hỗ trợ quản lý dữ liệu
+
+Các hàm căn bản của DAO:
+
+![{C49FEF60-3FAE-439D-B75E-7AA22ED48050}](https://github.com/user-attachments/assets/de43f324-594a-4869-a23b-cc71e07332c9)
+
+![{6DB05469-5505-4C74-8BAA-BC402415C2E7}](https://github.com/user-attachments/assets/de1a5503-4e17-46f8-aa7c-ac2956863d53)
+
+![{DE2D6899-8E74-400B-9711-3739D5B05519}](https://github.com/user-attachments/assets/c5232fc8-97d4-4ecc-8d90-03c268db2d41)
+
+![{0629812A-DBC7-4B20-BEE3-4B761EC42724}](https://github.com/user-attachments/assets/cd466c3b-083c-4c35-bdec-1bf1e375c184)
+
+![{00F26949-A97B-433E-B3B0-36D0A8A1DAE7}](https://github.com/user-attachments/assets/fd815a23-9f0b-4347-afeb-0e63c0b8d42e)
+
+![{E1C083E9-B20F-4AF0-ACB8-2DC34F7F4CEA}](https://github.com/user-attachments/assets/8553556c-1acd-40e8-bb1d-bbde97c4c414)
+
+![{8AE3033B-A278-409B-97D0-4D8AFD4F4398}](https://github.com/user-attachments/assets/cb80e1b0-b740-4c10-aaeb-5aa4781e74f4)
+
+Các hàm của swingHelper:
