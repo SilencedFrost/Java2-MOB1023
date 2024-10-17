@@ -60,3 +60,7 @@ Các hàm căn bản của DAO:
 ![{8AE3033B-A278-409B-97D0-4D8AFD4F4398}](https://github.com/user-attachments/assets/cb80e1b0-b740-4c10-aaeb-5aa4781e74f4)
 
 Các hàm của swingHelper:
+
+![{D0151BB5-5C6B-45AE-8963-B7662896F2CF}](https://github.com/user-attachments/assets/83f59614-da54-4ad5-8d6e-4c7cf1ae6748)
+
+![{8F0E9E92-7E6B-4382-AE7F-9E0618913935}](https://github.com/user-attachments/assets/c26f7f1d-9d77-4aa7-87f6-1e61df70799f)
