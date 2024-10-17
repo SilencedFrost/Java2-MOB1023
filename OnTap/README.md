@@ -67,3 +67,6 @@ Các hàm hay sử dụng của swingHelper:
 
 ![{578706B4-CAC4-450D-8EB3-2E922BBE88E0}](https://github.com/user-attachments/assets/b8d71d45-dc56-40cc-961c-b3e573aab055)
 
+![{6C688540-EA46-47C7-899D-A388864B34E7}](https://github.com/user-attachments/assets/17adf802-17d2-44aa-8779-3759c3fea047)
+
+![{E3F4751C-16FA-4015-AE25-D83EFA10332A}](https://github.com/user-attachments/assets/74302b5e-612e-4303-a08b-b4ea10f62f5b)
