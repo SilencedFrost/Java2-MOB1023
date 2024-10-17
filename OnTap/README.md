@@ -49,8 +49,6 @@ Các hàm căn bản của DAO:
 
 ![{6DB05469-5505-4C74-8BAA-BC402415C2E7}](https://github.com/user-attachments/assets/de1a5503-4e17-46f8-aa7c-ac2956863d53)
 
-![{DE2D6899-8E74-400B-9711-3739D5B05519}](https://github.com/user-attachments/assets/c5232fc8-97d4-4ecc-8d90-03c268db2d41)
-
 ![{0629812A-DBC7-4B20-BEE3-4B761EC42724}](https://github.com/user-attachments/assets/cd466c3b-083c-4c35-bdec-1bf1e375c184)
 
 ![{00F26949-A97B-433E-B3B0-36D0A8A1DAE7}](https://github.com/user-attachments/assets/fd815a23-9f0b-4347-afeb-0e63c0b8d42e)
@@ -58,6 +56,8 @@ Các hàm căn bản của DAO:
 ![{FBDB7C41-A6F2-4DD7-8213-85180DE853F2}](https://github.com/user-attachments/assets/f85c1373-2f7a-462a-b79b-a31b64b3dc21)
 
 ![{8AE3033B-A278-409B-97D0-4D8AFD4F4398}](https://github.com/user-attachments/assets/cb80e1b0-b740-4c10-aaeb-5aa4781e74f4)
+
+![{63ACB6B1-60E4-4188-B138-2D9D5B38FF3B}](https://github.com/user-attachments/assets/1d9e60ed-5345-47a8-8643-068aa22aa3ca)
 
 Các hàm hay sử dụng của swingHelper:
 
