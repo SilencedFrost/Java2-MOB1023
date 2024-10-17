@@ -55,7 +55,7 @@ Các hàm căn bản của DAO:
 
 ![{00F26949-A97B-433E-B3B0-36D0A8A1DAE7}](https://github.com/user-attachments/assets/fd815a23-9f0b-4347-afeb-0e63c0b8d42e)
 
-![{E1C083E9-B20F-4AF0-ACB8-2DC34F7F4CEA}](https://github.com/user-attachments/assets/8553556c-1acd-40e8-bb1d-bbde97c4c414)
+![{FBDB7C41-A6F2-4DD7-8213-85180DE853F2}](https://github.com/user-attachments/assets/f85c1373-2f7a-462a-b79b-a31b64b3dc21)
 
 ![{8AE3033B-A278-409B-97D0-4D8AFD4F4398}](https://github.com/user-attachments/assets/cb80e1b0-b740-4c10-aaeb-5aa4781e74f4)
 
