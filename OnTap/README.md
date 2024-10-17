@@ -22,18 +22,18 @@ Ví dụ:
 
 Tạo DAO theo cấu trúc:
 
-![{F12FD6A8-0919-454D-BFC3-6A2A30500A1B}](https://github.com/user-attachments/assets/949c8442-fd1d-408c-a052-df748d593a16)
+![{8BA9EF0B-EF65-4CE2-ACC7-5E113C014F0E}](https://github.com/user-attachments/assets/bd2d9fd0-9a7b-454c-9aa6-23211cd7c71f)
 
 Ví dụ:
 
-![{9B6CADF3-26AD-4984-A1E7-9535C15D9EB5}](https://github.com/user-attachments/assets/8ad65973-c1a7-4195-883c-45b21f82986e)
+![{596E0A1B-D920-46C6-82C4-FC7D06230C22}](https://github.com/user-attachments/assets/30b43c5a-92c3-4891-9733-2ad6deecafb3)
 
 Vậy là xong phần quản lý dữ liệu
 Tiếp đến là sử dụng SwingHelper
 
 Ở đầu file JFrame của bạn, khởi chạy SwingHelper như sau:
 
-![{766F65D2-3E16-418D-A1DF-F0F636EEB911}](https://github.com/user-attachments/assets/de9e1ab0-bfa1-483d-98d8-8c863720cd03)
+![{0B736379-E635-4F33-A684-9683755BD14B}](https://github.com/user-attachments/assets/6d94321a-084a-471e-b5d9-2e05c3f638c2)
 
 Ví dụ:
 
